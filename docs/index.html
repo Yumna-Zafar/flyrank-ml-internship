@@ -197,17 +197,21 @@
   <section id="abstract">
     <h2>Abstract</h2>
     <p class="lead">
-      Given limited reviewer capacity, which content pages should be prioritized for a refresh?
-      Using FlyRank's anonymized search-performance warehouse (dimension and daily fact tables
-      spanning 57 brands), I built a Random Forest classifier that predicts next-month decline
-      risk from prior-month search signals only, and compared it against a transparent
-      hand-written baseline rule on the same held-out, client-grouped split. The model scored
-      meaningfully higher on ROC AUC than the baseline rule across repeated runs (typically
-      0.91&ndash;0.94 vs. 0.65&ndash;0.75), a gap I specifically tested for leakage and split-design
-      artifacts before trusting. The result is a ranked, reason-coded action queue intended as
-      decision-support for a human content reviewer &mdash; not an autonomous system, and not a
-      causal claim about what refreshing a page would do.
-    </p>
+  FlyRank's content review teams face a real prioritization problem: across a warehouse of
+  over half a million content items spanning 57 client brands, reviewer time is limited, and
+  deciding which pages to check first for a possible refresh is currently guided by
+  hand-tuned rules. This paper asks whether a model trained on prior search behavior can
+  rank pages by decline risk more usefully than a comparably simple, hand-written rule &mdash;
+  and tests that honestly rather than assuming it. Using FlyRank's anonymized
+  search-performance warehouse, I built a Random Forest classifier that predicts next-month
+  decline risk from prior-month search signals only, and compared it against a transparent
+  baseline rule on the same held-out, client-grouped split. The model scored meaningfully
+  higher on ROC AUC than the baseline across repeated runs (typically 0.91&ndash;0.94 vs.
+  0.65&ndash;0.75), a gap I specifically tested for leakage and split-design artifacts before
+  trusting. The result is a ranked, reason-coded action queue intended as decision-support
+  for a human content reviewer &mdash; not an autonomous system, and not a causal claim about
+  what refreshing a page would do.
+</p>
   </section>
 
   <section id="intro">
@@ -219,6 +223,16 @@
       treats every qualifying page the same, regardless of how strong the underlying signal
       actually is.
     </p>
+    <p>
+  This is the real problem FlyRank's own reviewers face: with 519,606 content items across
+  57 client brands in the warehouse, no team can manually audit every page every month.
+  FlyRank's product already computes rule-based flags for this (a health score, a
+  "needs CTR fix" flag, and similar signals) &mdash; but those flags are hand-tuned, and this
+  project asks a narrower, testable question: on real historical outcomes, does a model
+  learn a genuinely better ranking than a simple, explainable rule built the same way a
+  reviewer might build one by hand? This paper is that case study, worked end to end on
+  one representative slice of the warehouse.
+</p>
     <p>
       This project asks whether a model trained on prior search behavior can rank pages by
       decline risk more usefully than that fixed rule, while remaining honest about validation,
